@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinel - Доставка еды</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="assets/logo.png" alt="Dinel Logo" class="logo">
+            <h1>Добро пожаловать в Dinel!</h1>
+            <p>Быстрая доставка вкусной еды</p>
+        </header>
+
+        <main>
+            <section class="categories">
+                <h2>Наше меню</h2>
+                <div class="category-grid">
+                    <div class="category-card" onclick="openCategory('burgers')">
+                        <img src="assets/dishes/burger.jpg" alt="Бургеры">
+                        <h3>Бургеры</h3>
+                    </div>
+                    <div class="category-card" onclick="openCategory('pizza')">
+                        <img src="assets/dishes/pizza.jpg" alt="Пицца">
+                        <h3>Пицца</h3>
+                    </div>
+                    <div class="category-card" onclick="openCategory('sushi')">
+                        <img src="assets/dishes/sushi.jpg" alt="Суши">
+                        <h3>Суши</h3>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <button class="cart-btn" onclick="openCart()">
+                🛒 Корзина (<span id="cart-count">0</span>)
+            </button>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
