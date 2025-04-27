@@ -1,34 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const tg = window.tg; // Используем глобальный tg из app.js
+  
+    // Проверяем Telegram WebApp
+    if (!tg) {
+      console.log("Приложение запущено вне Telegram");
+    }
+  
+    // Кнопка "Назад"
+    if (tg?.BackButton) {
+      tg.BackButton.show();
+      tg.BackButton.onClick(() => {
+        window.location.href = "../index.html";
+      });
+    }
+  
+    // Получаем категорию из URL
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category');
   
-    if (!category || !window.menuData || !window.menuData[category]) {
-      tg.showAlert("Категория не найдена");
+    // Проверяем категорию
+    if (!category || !window.menuData?.[category]) {
+      if (tg) tg.showAlert("Категория не найдена");
       window.location.href = "../index.html";
       return;
     }
   
+    // Устанавливаем заголовок
     document.getElementById('category-title').textContent = 
       category === 'burgers' ? 'Бургеры' :
       category === 'pizza' ? 'Пицца' : 'Суши';
   
+    // Рендерим меню
     renderMenu(category);
     window.loadCart();
-  
-    // Кнопка назад
-    if (window.Telegram && window.Telegram.WebApp.BackButton) {
-      window.Telegram.WebApp.BackButton.show();
-      window.Telegram.WebApp.BackButton.onClick(() => {
-        window.location.href = "../index.html";
-      });
-    }
   });
   
   function renderMenu(category) {
     const menuItemsContainer = document.getElementById('menu-items');
     menuItemsContainer.innerHTML = '';
-  
-    console.log("Данные меню:", window.menuData); // Для отладки
   
     const items = window.menuData[category];
     if (!items) return;

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Меню | Dinel</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/menu/menu.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
@@ -14,19 +14,19 @@
         </header>
 
         <main>
-            <div class="menu-item" id="menu-item">
+            <div class="menu-items" id="menu-items">
                 <!-- Товары будут здесь -->
             </div>
         </main>
 
         <footer>
-            <button class="cart-btn" onclick="window.openCart()">
+            <button class="cart-btn" onclick="openCart()">
                 🛒 Корзина (<span id="cart-count">0</span>)
             </button>
         </footer>
     </div>
 
-    <script src="../app.js"></script>
-    <script src="menu.js"></script>
+    <script src="/app.js"></script>
+    <script src="/menu/menu.js"></script>
 </body>
 </html>
