@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dinel - Корзина</title>
+    <title>Корзина | Dinel</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="cart.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -16,7 +15,7 @@
 
         <main>
             <div class="cart-items" id="cart-items">
-                <!-- Тут будут товары в корзине -->
+                <!-- Товары будут здесь -->
             </div>
 
             <div class="cart-summary">
@@ -24,7 +23,9 @@
                     <span>Итого:</span>
                     <span id="total-price">0 ₽</span>
                 </div>
-                <button class="checkout-btn" onclick="checkout()">Оформить заказ</button>
+                <button class="checkout-btn" onclick="window.sendOrderToBot()">
+                    Оформить заказ
+                </button>
             </div>
         </main>
     </div>

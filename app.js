@@ -1,3 +1,15 @@
+// Делаем функции глобальными для всех страниц
+window.menuData = menuData;
+window.cart = cart;
+window.loadCart = loadCart;
+window.saveCart = saveCart;
+window.updateCartCount = updateCartCount;
+window.addToCart = addToCart;
+window.changeQuantity = changeQuantity;
+window.removeItem = removeItem;
+window.sendOrderToBot = sendOrderToBot;
+window.openCart = openCart;
+window.openCategory = openCategory;
 // ======================
 // 1. Инициализация Telegram WebApp
 // ======================
@@ -18,12 +30,12 @@ console.log("Пользователь:", user); // Для отладки
 // ======================
 const menuData = {
   burgers: [
-    { id: 1, name: 'Чизбургер', price: 250, image: 'assets/burger.jpg' },
-    { id: 2, name: 'Бургер с беконом', price: 320, image: 'assets/burger.jpg' }
+    { id: 1, name: 'Чизбургер', price: 250, image: 'assets/burger.jpeg' },
+    { id: 2, name: 'Бургер с беконом', price: 320, image: 'assets/burger.jpeg' }
   ],
   pizza: [
-    { id: 3, name: 'Маргарита', price: 450, image: 'assets/pizza.jpg' },
-    { id: 4, name: 'Пепперони', price: 550, image: 'assets/pizza.jpg' }
+    { id: 3, name: 'Маргарита', price: 450, image: 'assets/pizza.jpeg' },
+    { id: 4, name: 'Пепперони', price: 550, image: 'assets/pizza.jpeg' }
   ],
   sushi: [
     { id: 5, name: 'Филадельфия', price: 380, image: 'assets/sushi.jpg' },

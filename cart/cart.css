@@ -2,6 +2,7 @@
     display: grid;
     gap: 15px;
     margin-bottom: 20px;
+    padding-bottom: 120px;
 }
 
 .cart-item {
@@ -60,6 +61,10 @@
 }
 
 .cart-summary {
+    position: fixed;
+    bottom: 70px;
+    left: 20px;
+    right: 20px;
     background: white;
     border-radius: 12px;
     padding: 20px;
