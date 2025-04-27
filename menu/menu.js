@@ -1,60 +1,60 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const tg = window.tg; // Используем глобальный tg из app.js
-  
-    // Проверяем Telegram WebApp
-    if (!tg) {
-      console.log("Приложение запущено вне Telegram");
-    }
-  
-    // Кнопка "Назад"
+    // 1. Проверяем Telegram WebApp
+    const tg = window.Telegram?.WebApp;
+    
+    // 2. Настройка кнопки "Назад"
     if (tg?.BackButton) {
-      tg.BackButton.show();
-      tg.BackButton.onClick(() => {
-        window.location.href = "../index.html";
-      });
+        tg.BackButton.show();
+        tg.BackButton.onClick(() => {
+            window.location.href = '/index.html';
+        });
     }
-  
-    // Получаем категорию из URL
+
+    // 3. Загрузка категории
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category');
-  
-    // Проверяем категорию
+    
     if (!category || !window.menuData?.[category]) {
-      if (tg) tg.showAlert("Категория не найдена");
-      window.location.href = "../index.html";
-      return;
+        if (tg) tg.showAlert("Категория не найдена");
+        window.location.href = '/index.html';
+        return;
     }
-  
-    // Устанавливаем заголовок
-    document.getElementById('category-title').textContent = 
-      category === 'burgers' ? 'Бургеры' :
-      category === 'pizza' ? 'Пицца' : 'Суши';
-  
-    // Рендерим меню
+
+    // 4. Установка заголовка
+    const titles = { burgers: 'Бургеры', pizza: 'Пицца', sushi: 'Суши' };
+    document.getElementById('category-title').textContent = titles[category] || 'Меню';
+
+    // 5. Рендер меню
     renderMenu(category);
-    window.loadCart();
-  });
-  
-  function renderMenu(category) {
-    const menuItemsContainer = document.getElementById('menu-items');
-    menuItemsContainer.innerHTML = '';
-  
-    const items = window.menuData[category];
-    if (!items) return;
-  
-    items.forEach(item => {
-      const itemElement = document.createElement('div');
-      itemElement.className = 'menu-item';
-      itemElement.innerHTML = `
-        <img src="../../assets/${item.image}" alt="${item.name}">
-        <div class="item-info">
-          <span class="item-name">${item.name}</span>
-          <span class="item-price">${item.price} ₽</span>
-        </div>
-        <button class="add-to-cart" onclick="window.addToCart(${item.id}, '${category}')">
-          В корзину
-        </button>
-      `;
-      menuItemsContainer.appendChild(itemElement);
+    window.updateCartCount();
+});
+
+function renderMenu(category) {
+    const container = document.getElementById('menu-items');
+    container.innerHTML = '';
+    
+    window.menuData[category].forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'menu-item';
+        itemElement.innerHTML = `
+            <img src="/assets/${item.image}" alt="${item.name}">
+            <div class="item-info">
+                <span class="item-name">${item.name}</span>
+                <span class="item-price">${item.price} ₽</span>
+            </div>
+            <button class="add-to-cart" data-id="${item.id}" data-category="${category}">
+                В корзину
+            </button>
+        `;
+        container.appendChild(itemElement);
     });
-  }
+
+    // Вешаем обработчики на кнопки
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const itemId = parseInt(btn.dataset.id);
+            const category = btn.dataset.category;
+            window.addToCart(itemId, category);
+        });
+    });
+}

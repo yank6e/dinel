@@ -1,16 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dinel - Доставка еды</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
+    <!-- Подключаем Telegram WebApp SDK первым -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Подключаем app.js с defer -->
+    <script src="/app.js" defer></script>
+    <style>
+        /* Дополнительные стили для кнопок */
+        .category-btn {
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .category-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <img src="assets/logo.jpg" alt="Dinel" class="logo">
+            <img src="/assets/logo.jpg" alt="Dinel" class="logo">
             <h1>Dinel - Доставка еды</h1>
             <p>Быстро, вкусно, надежно</p>
         </header>
@@ -19,13 +31,13 @@
             <section class="categories">
                 <h2>Выберите категорию:</h2>
                 <div class="category-buttons">
-                    <button class="category-btn" onclick="openCategory('burgers')">
+                    <button class="category-btn" data-category="burgers" id="burgers-btn">
                         🍔 Бургеры
                     </button>
-                    <button class="category-btn" onclick="openCategory('pizza')">
+                    <button class="category-btn" data-category="pizza" id="pizza-btn">
                         🍕 Пицца
                     </button>
-                    <button class="category-btn" onclick="openCategory('sushi')">
+                    <button class="category-btn" data-category="sushi" id="sushi-btn">
                         🍣 Суши
                     </button>
                 </div>
@@ -33,15 +45,73 @@
         </main>
 
         <div class="cart-footer">
-            <button class="cart-btn" onclick="openCart()">
+            <button class="cart-btn" id="cart-btn">
                 🛒 Корзина (<span id="cart-count">0</span>)
             </button>
-            <button id="checkout-btn" class="checkout-btn" onclick="sendOrderToBot()">
+            <button class="checkout-btn" id="checkout-btn">
                 Оформить заказ
             </button>
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <!-- Скрипт инициализации -->
+    <script>
+        // Ждем полной загрузки DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            // Проверяем доступность функций навигации
+            console.log('Проверка функций:', {
+                openCategory: typeof window.openCategory,
+                openCart: typeof window.openCart
+            });
+
+            // Вешаем обработчики через делегирование событий
+            document.addEventListener('click', function(e) {
+                // Обработка кнопок категорий
+                if (e.target.closest('.category-btn')) {
+                    const btn = e.target.closest('.category-btn');
+                    const category = btn.dataset.category;
+                    console.log('Выбрана категория:', category);
+                    
+                    if (typeof window.openCategory === 'function') {
+                        window.openCategory(category);
+                    } else {
+                        console.error('Функция openCategory не доступна');
+                        // Fallback для тестирования вне Telegram
+                        window.location.href = `/menu/index.html?category=${encodeURIComponent(category)}`;
+                    }
+                }
+
+                // Обработка кнопки корзины
+                if (e.target.id === 'cart-btn' || e.target.closest('#cart-btn')) {
+                    console.log('Открытие корзины');
+                    
+                    if (typeof window.openCart === 'function') {
+                        window.openCart();
+                    } else {
+                        console.error('Функция openCart не доступна');
+                        // Fallback для тестирования вне Telegram
+                        window.location.href = '/cart/index.html';
+                    }
+                }
+
+                // Обработка кнопки оформления заказа
+                if (e.target.id === 'checkout-btn' || e.target.closest('#checkout-btn')) {
+                    console.log('Оформление заказа');
+                    
+                    if (typeof window.sendOrderToBot === 'function') {
+                        window.sendOrderToBot();
+                    } else {
+                        console.error('Функция sendOrderToBot не доступна');
+                        alert('Функция оформления заказа недоступна');
+                    }
+                }
+            });
+
+            // Инициализация корзины
+            if (typeof window.updateCartCount === 'function') {
+                window.updateCartCount();
+            }
+        });
+    </script>
 </body>
 </html>
