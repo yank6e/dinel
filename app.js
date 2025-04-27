@@ -158,8 +158,7 @@ async function sendOrderToBot() {
 // 5. Вспомогательные функции
 // ======================
 function openCategory(category) {
-  // В реальном приложении здесь переход на страницу меню
-  console.log("Открываем категорию:", category);
+  window.location.href = `menu/index.html?category=${category}`;
 }
 
 function openCart() {
@@ -167,8 +166,7 @@ function openCart() {
     tg.showAlert('Корзина пуста');
     return;
   }
-  // В реальном приложении здесь открытие корзины
-  console.log("Корзина:", cart);
+  window.location.href = 'cart/index.html';
 }
 
 // ======================
