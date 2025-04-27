@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,36 +10,37 @@
 <body>
     <div class="container">
         <header>
-            <img src="assets/logo.png" alt="Dinel Logo" class="logo">
-            <h1>Добро пожаловать в Dinel!</h1>
-            <p>Быстрая доставка вкусной еды</p>
+            <img src="assets/logo.png" alt="Dinel" class="logo">
+            <h1>Dinel - Доставка еды</h1>
+            <p>Быстро, вкусно, надежно</p>
         </header>
 
         <main>
             <section class="categories">
-                <h2>Наше меню</h2>
-                <div class="category-grid">
-                    <div class="category-card" onclick="openCategory('burgers')">
-                        <img src="assets/dishes/burger.jpg" alt="Бургеры">
-                        <h3>Бургеры</h3>
-                    </div>
-                    <div class="category-card" onclick="openCategory('pizza')">
-                        <img src="assets/dishes/pizza.jpg" alt="Пицца">
-                        <h3>Пицца</h3>
-                    </div>
-                    <div class="category-card" onclick="openCategory('sushi')">
-                        <img src="assets/dishes/sushi.jpg" alt="Суши">
-                        <h3>Суши</h3>
-                    </div>
+                <h2>Выберите категорию:</h2>
+                <div class="category-buttons">
+                    <button class="category-btn" onclick="openCategory('burgers')">
+                        🍔 Бургеры
+                    </button>
+                    <button class="category-btn" onclick="openCategory('pizza')">
+                        🍕 Пицца
+                    </button>
+                    <button class="category-btn" onclick="openCategory('sushi')">
+                        🍣 Суши
+                    </button>
                 </div>
             </section>
         </main>
 
-        <footer>
+        <!-- Кнопка корзины (добавьте этот блок перед закрывающим </body>) -->
+        <div class="cart-footer">
             <button class="cart-btn" onclick="openCart()">
                 🛒 Корзина (<span id="cart-count">0</span>)
             </button>
-        </footer>
+            <button id="checkout-btn" class="checkout-btn" onclick="sendOrderToBot()">
+                Оформить заказ
+            </button>
+        </div>
     </div>
 
     <script src="app.js"></script>
